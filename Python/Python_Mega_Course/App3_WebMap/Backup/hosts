@@ -1,0 +1,39 @@
+# Copyright (c) 1993-2009 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+
+# localhost name resolution is handled within DNS itself.
+#	127.0.0.1       localhost
+#	::1             localhost
+10.20.90.101		sixhsapdv01x		sixhsapdv01x.sixtecnologia.com.br 
+10.20.90.111		sixhsappd01x		sixhsappd01x.sixtecnologia.com.br 
+10.20.90.112		sixhsappd02x		sixhsappd02x.sixtecnologia.com.br 
+10.20.90.113		sixhsappd03x		sixhsappd03x.sixtecnologia.com.br 
+10.23.7.151 		SRVSAPPORD01		SRVSAPPORD01.unitec.local 
+10.23.7.153 		srvsapeccd01		srvsapeccd01.unitec.local 
+10.23.1.50 		srvsappip01		srvsappip01.unitec.local 
+10.23.1.49 		srvsapeccp01		srvsapeccp01.unitecgroup.net 
+10.23.1.50		srvsappip01		srvsappip01.unitec.local 
+10.23.1.51 		srvsapgrcp01		srvsapgrcp01.unitec.local 
+10.23.1.52 		srvsapporp01 		srvsapporp01.unitecgroup.net 
+10.23.7.149 		srvsappid01		srvsappid01.unitec.local 
+10.23.7.150 		srvsapgrcd01		srvsapgrcd01.unitec.local 
+10.23.7.152 		srvsapsol		srvsapsol.unitec.local 
+10.23.7.203 		srvsapeccq01		srvsapeccq01.unitec.local 
+10.23.7.204 		srvsappiq01		srvsappiq01.unitec.local 
+10.23.7.205 		srvsapgrcq01		srvsapgrcq01.unitec.local 
+10.23.7.206 		srvsapporq01		srvsapporq01.unitec.local 

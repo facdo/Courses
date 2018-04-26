@@ -43,6 +43,8 @@ int main() {
         // that were passed
         Person person("Mr. Pickles", 43);
         person.introduction();
+        Person theDude("Duffy Duck");
+        theDude.introduction();
         // We can see from the destructor message that this object is
         // destroyed after the curly brackets
     }

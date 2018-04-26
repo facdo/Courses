@@ -22,6 +22,13 @@ Person::Person(std::string name, unsigned short int age) {
     this->age = age;
 }
 
+// Alternative constructor to set the name only, using Constructor Initialization List
+// Recommended method for writing a constructor. We can pass as many arguments as we want
+// separating then with commas, ','
+// Since the constructor only initialize those variables it doesn't need any code inside
+// the curly brackets
+Person::Person(std::string name): name(name) {}
+
 // Here we put the destructor definition
 Person::~Person(){
     cout << "Person destroyed" << endl;

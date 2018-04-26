@@ -28,6 +28,8 @@ public:
     // We can have as many constructors as we like, as long they have different
     // parameters
     Person(std::string name, unsigned short int age);
+    // Another constructor
+    Person(std::string name);
     // We can have variable associated with the data related to that person
     // These variable can be accessed in the class methods (functions) to alter 
     // its behaviour

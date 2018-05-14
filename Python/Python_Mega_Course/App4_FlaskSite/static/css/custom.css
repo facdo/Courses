@@ -1,0 +1,21 @@
+body {
+    color: rgb(45,45,45);
+    font-family: 'Lucida Sans Regular',  Geneva, Verdana, sans-serif';
+}
+
+.home {
+    background-color: bisque;
+}
+
+.content {
+    background-color: darkgrey;
+}
+
+.about {
+    background-color: darkgrey;
+}
+
+.container {
+    margin-top: 15px;
+    padding: 20px;
+}

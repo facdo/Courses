@@ -1,0 +1,19 @@
+{% extends "base.html" %} 
+{% block content %}
+
+<div class="col">
+    <div class="alert alert-info">
+        <p>
+            Felipe has done a lot of interesting tech related projects. <br>
+            Bellow are the listing of a few notable ones:
+        </p>
+        <ul>
+            {% for project in project_list %}
+                <li>
+                    {{ project }}
+                </li>   
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

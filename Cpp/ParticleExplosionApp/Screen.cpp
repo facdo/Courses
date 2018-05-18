@@ -16,7 +16,8 @@ namespace sdlApp {
 Screen::Screen() : window(NULL), 
                    renderer(NULL), 
                    texture(NULL),
-                   buffer(NULL) { }
+                   buffer(NULL),
+                   blur_buffer(NULL) { }
 
 // The initialization of all components will be carried in this method
 bool Screen::init(){
@@ -78,10 +79,11 @@ bool Screen::init(){
     // basically a unsigned 32 bit integer (4bytes)
     // Since we are using "new" we must delete it after use
     buffer = new Uint32[WIDTH*HEIGHT];
+    blur_buffer = new Uint32[WIDTH*HEIGHT];
 
     // We can use the function memset to write data into our buffer,
-    // here we are writing 255 (0xFF) in the entire buffer
-    memset(buffer, 0xFF, WIDTH*HEIGHT*sizeof(Uint32));
+    // here we are writing 0 (0x00) in the entire buffer
+    memset(buffer, 0x00, WIDTH*HEIGHT*sizeof(Uint32));
 
     return true;
 }
@@ -137,9 +139,59 @@ bool Screen::processEvents() {
     return true;
 }
 
+void Screen::clear() {
+    // after creating the boxBlur this function would not be used anymore
+    memset(buffer, 0x00, WIDTH*HEIGHT*sizeof(Uint32));
+    memset(blur_buffer, 0x00, WIDTH*HEIGHT*sizeof(Uint32));
+}
+
+void Screen::boxBlur() {
+    // This is an expensive algorithm in terms of processing requirements
+    // The logic is to look at the screen state and calculate the next screen
+    // with blured particles, based on the current state
+    // We're swaping pointers to copy the buffer content to the blur_buffer
+    Uint32 *temp = buffer;
+    buffer = blur_buffer;
+    blur_buffer = temp;
+
+    for(int y=0; y<HEIGHT; y++) {
+        for(int x=0; x<WIDTH; x++) {
+            // We want get the average color value of the pixels around a central pixel
+            // and change the colors of the pixels to be that average value.
+            // So if we would have something like this:
+            // 0 0 0 -> 28 28 28
+            // 0 255 0 -> 28 28 28
+            // 0 0 0 -> 28 28 28
+
+            // For each pixel in the screen we would iterate through the 9 pixels surrounding it
+            int red_total = 0;
+            int green_total = 0;
+            int blue_total = 0;
+            for(int row=-1; row<=1; row++) {
+                for(int col=-1; col<=1; col++) {
+                    int current_x = x + col;
+                    int current_y = y + row;
+                    // we need to ignore pixels outside of the screen
+                    if(current_x >=0 && current_x < WIDTH && current_y >=0 && current_y < HEIGHT){
+                        // lets get the pixel color
+                        Uint32 color = blur_buffer[current_y*WIDTH+current_x];
+                        // lets get the RGB components and sum it up
+                        red_total += (color & 0xFF000000) >> 24;
+                        green_total += (color & 0x00FF0000) >> 16;
+                        blue_total += (color & 0x0000FF00) >> 8;
+                    }
+                }
+            }
+
+            setPixel(x, y, red_total/9, green_total/9, blue_total/9);
+        }
+    }
+}
+
 void Screen::close() {
     // destroy the components freeing memory space
     delete [] buffer;
+    delete [] blur_buffer;
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

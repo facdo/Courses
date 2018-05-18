@@ -1,6 +1,9 @@
 {
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "files.associations": {
-        "initializer_list": "cpp"
+        "initializer_list": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "*.tcc": "cpp"
     }
 }

@@ -9,15 +9,19 @@ namespace sdlApp {
 
 class PCrowd {
 public:
-    const static int N_PARTICLES = 5000;
+    const static int N_PARTICLES = 10000;
 
 private:
     Particle *pParticles;
+    // time of the last iteraction, to compare with elapsed
+    int last_time;
 
 public:
     PCrowd();
     virtual ~PCrowd();
 	const Particle * const getParticles() { return pParticles; };
+    // The elapsed time is used to update the speed by a known amount
+    void update(int elapsed);
 };
 }
 #endif

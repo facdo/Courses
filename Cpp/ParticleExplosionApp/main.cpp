@@ -52,6 +52,10 @@ int main() {
     // Let's create a crowd of particles
     PCrowd particleCrowd;
 
+    // Set constants to scale and offset the x and y positions of the particles
+    const int x_scale = Screen::WIDTH/2;
+    const int y_scale = Screen::HEIGHT/2;
+
     // Now we will create an infinite loop to display the window until
     // the user clicks in the close button, triggering a SDL_QUIT event
     while(true) {
@@ -63,36 +67,39 @@ int main() {
         // particles, an instance of PCrowd
         const Particle * const pParticles = particleCrowd.getParticles();
 
-        // now lets iterate to all particles and assign each one to a pixel
-        for(int i=0; i<PCrowd::N_PARTICLES; i++){
-            // Particle particle = pParticles[i];
-
-            int x = (pParticles[i].x + 1) * Screen::WIDTH/2;
-            int y = (pParticles[i].y + 1) * Screen::HEIGHT/2;
-            cout << x << ' ' << y << endl;
-
-            screen.setPixel(x, y, 0, 0, 0);
-        }
-
-        /*
+        // To make sure the particle speed is the same in all computers we need to
+        // use some reference to update the speed. We're using the elapsed time to do that
+        int elapsed = SDL_GetTicks();// returns the time in miliseconds that the program is running
 
         // In order to animate our colors we need to supply a constant changing number
         // to our RGB values. We're using the sine function, fed with the elapsed time
         // that the program is running
-        int elapsed = SDL_GetTicks();// returns the time in miliseconds that the program is running
-        double smooth_factor = 0.0002; // to avoid sudden changes in the color
+        double smooth_factor = 0.00025; // to avoid sudden changes in the color
         unsigned char red = (unsigned char)((1+sin(elapsed * smooth_factor))*128);
-        unsigned char green = (unsigned char)((1+sin(elapsed * smooth_factor * 3))*128);
-        unsigned char blue = (unsigned char)((1+sin(elapsed * smooth_factor * 5))*128);
+        unsigned char green = (unsigned char)((1+sin(elapsed * smooth_factor * 2))*128);
+        unsigned char blue = (unsigned char)((1+sin(elapsed * smooth_factor * 3))*128);
 
-        // Lets update the whole screen using our setPixel method
-        for(int x=0; x<screen.WIDTH; x++){
-            for(int y=0; y<screen.HEIGHT; y++){
-                screen.setPixel(x, y, red, green, blue);
-            }
+        // // clear the buffer, so the particle movement doesn't create a trace
+        // screen.clear();
+
+        // Blur the screen to have a nice trace visual effect
+        screen.boxBlur();
+        // let's update the particle position using the update method in the particleCrowd
+        particleCrowd.update(elapsed);
+
+        // now lets iterate to all particles and assign each one to a pixel
+        for(int i=0; i<PCrowd::N_PARTICLES; i++){
+            // Particle particle = pParticles[i];
+
+            // int x = (particleCrowd.getParticles()[i].x + 1) * Screen::WIDTH/2; // That would also work
+            // int y = (particleCrowd.getParticles()[i].y + 1) * Screen::HEIGHT/2;
+
+            int x = (pParticles[i].x + 1) * x_scale;
+            int y = pParticles[i].y * x_scale + y_scale;
+
+            screen.setPixel(x, y, red, green, blue);
         }
 
-        */
         screen.update();
         // if the user clicks in the close window button, terminates the program
         if(screen.processEvents()==false) {

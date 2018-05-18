@@ -11,6 +11,16 @@
 
     We will be using these operations for seting our pixels in our Screen class
 
+
+    ------------------------- Bitwise AND Operation -----------------------------
+
+    To retrieve the individual RGBA color values from the 32bit color integer we 
+    can use the bitwise and operation, done using the '&' character. It takes the 
+    bit intersection between two values. Ex: 0x45001F00 & 0xF000FF00 = 0x40001F00
+    So we use a mask, composed of 0s and Fs, to get bit portions that we want. 
+    The mask with hexadecimal values F and 0 corresponds to the binary 11111111, 
+    and 00000000 numbers.
+
 */
 
 #include <iostream>
@@ -56,6 +66,16 @@ int main() {
 
     cout << setfill('0') << setw(8) << hex << color << endl;
     // see that the resulting color is exactly the one we wanted: 0xFF0A333B
+
+    // Bitwise AND: the & operator, retrieveing the red, green and blue
+    cout << "Retrieving the individual colors! Bitwise AND." << endl;
+    int r_red = (color & 0x00FF0000) >> 16;
+    int r_green = (color & 0x0000FF00) >> 8;
+    int r_blue = (color & 0x000000FF);
+
+    cout << "Red: " << r_red << endl;
+    cout << "Green: " << r_green << endl;
+    cout << "Blue: " << r_red << endl;
 
     return 0;
 }
